@@ -25,6 +25,20 @@ FROM (
 ) d;
 
 -- ------------------------------------------------------------
+-- 2) DIM_ESPECIE
+-- ------------------------------------------------------------
+INSERT INTO dim_especie (sk_especie, id_especie, nome_cientifico, nome_popular_1)
+SELECT
+    ROW_NUMBER() OVER (ORDER BY id_especie) AS sk_especie,
+    id_especie,
+    nome_cientifico,
+    nome_popular_1
+FROM (
+    SELECT DISTINCT id_especie, nome_cientifico, nome_popular_1
+    FROM [meu_lakehouse].[dbo].[madeiras_brasileiras]
+) d;
+
+-- ------------------------------------------------------------
 -- 3) DIM_APARENCIA 
 -- ------------------------------------------------------------
 INSERT INTO dim_aparencia (
